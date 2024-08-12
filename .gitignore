@@ -18,13 +18,21 @@
 !*.jpeg
 !*.jpg
 !*.docx
+
 # 编程
 !*.c
+!*.h
+
 !*.cpp
+!*.c++
+!*.cc
+!*.cxx
+!*.hpp
+
 !*.java
 !*.html
+
 !*.py
-!*.h
 
 # 不忽略.gitignore
 !.gitignore
