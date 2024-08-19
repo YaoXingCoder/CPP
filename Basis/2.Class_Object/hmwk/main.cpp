@@ -9,22 +9,25 @@
 
 #include "02_student.hh"
 #include <iostream>
-using namespace std;
+using std::cout;
+using std::endl;
 
 void test01 () {
-
     Student stu1;
     stu1.setSID(1);
     stu1.setAge(12);
     stu1.setName("Tom");
 
     Student stu2(2, "Jack", 13);
+    /* Student stu3(3, "Mary", 14); */
 
     Student stu3 = Student(3, "Mary", 14);
+    /* Student stu4 = stu3; */ 
 
     stu1.print();
     stu2.print();
     stu3.print();
+    /* stu4.print(); */
 }
 
 int main (int argc, char* argv[]) {

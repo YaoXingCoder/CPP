@@ -33,16 +33,6 @@ private:
     int _iy;
 };
 
-class Line{
-public:
-    Line(int x1, int y1, int x2, int y2);
-    ~Line();
-    void printLine();
-private:
-    Point _pt1;
-    Point _pt2;
-};
-
 /* =====================Point类函数实现===================== */
 
 inline Point& Point::getInstance() {
