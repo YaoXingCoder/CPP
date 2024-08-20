@@ -16,22 +16,22 @@ using std::string;
 class Point{
 public:
     /* explicit//禁止隐式转换 */
-    Point(int x = 0,int y = 0)
+    Point(int x = 0, int y = 0)
     : _ix(x)
     , _iy(y)
     {
-        cout << "Point(int,int)" << endl;
+        cout << "Point(int,int) 有参" << endl;
     }
 
     Point(const Point & rhs)
     : _ix(rhs._ix)
     , _iy(rhs._iy)
     {
-        cout << "Point(const Point &)" << endl;
+        cout << "Point(const Point &) 拷贝" << endl;
     }
 
     ~Point(){
-        cout << "~Point()" << endl;
+        cout << "~Point() 析构" << endl;
     }
 
     void print() const{
@@ -45,15 +45,15 @@ private:
 };
 
 void test0(){
-    Point pt(1,2);
+    /* Point pt(1,2); */
     //缺省调用
-    Point pt2(3);
-    Point pt3;
+    /* Point pt2(3); */
+    /* Point pt3; */
 
     //隐式转换
     //编译器会尝试使用一个int型参数初始化一个匿名的Point对象
     //再通过拷贝构造初始化pt4
-    //Point pt4 = Point(3);
+    /* Point pt4 = Point(3); */
     Point pt4 = 3;
     pt4.print();
 }
