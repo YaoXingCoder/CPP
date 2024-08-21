@@ -39,15 +39,17 @@ private:
 /*     return Complex(c1._real + c2._real, c1._image + c2._image ); */
 /* } */
 
+/* 普通函数 */
+/* 相较于友元函数, 普通函数破坏类的隐藏性更严重 */
 Complex operator+ ( const Complex& c1, const Complex& c2 ) {
     return Complex(c1.getReal() + c2.getReal(), c1.getImage() + c2.getImage());
 }
 
 
 void test01() {
-    /* 本质为 */
-    /* operator+(Complex(1, 2), Complex(3, 4)) */
     (Complex(1, 2) + Complex(3, 4)).print();
+    /* 本质为 */
+    operator+( Complex(1, 2), Complex(3, 4) ).print();
 }
 
 int main (int argc, char* argv[]) {

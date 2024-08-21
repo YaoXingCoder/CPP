@@ -26,24 +26,29 @@ public:
         cout << _real << " + " << _image << "i" << endl;
     }
 
+    /* friend */
+    /* Complex add(const Complex& lhs, const Complex& rhs); */
+    friend
+    Complex operator+(const Complex& c1, const Complex& c2);
+
 private:
     int _real;
     int _image;
 };
 
-/* Complex operator+(const Complex& c1, const Complex& c2) { */
-/*     return Complex(c1._real + c2._real, c1._image + c2._image ); */
-/* } */
+Complex operator+(const Complex& c1, const Complex& c2) {
+    return Complex(c1._real + c2._real, c1._image + c2._image );
+}
 
-/* Complex operator+ ( const Complex& c1, const Complex& c2 ) { */
-/*     return Complex(c1.getReal() + c2.getReal(), c1.getImage() + c2.getImage()); */
+/* Complex add(const Complex& lhs, const Complex & rhs) { */
+/*     return Complex(lhs._real + rhs._real, lhs._image + rhs._image ); */
 /* } */
-
 
 void test01() {
-    /* 本质为 */
-    /* Complex(1, 2) operator+(Complex(3, 4)) */
-    /* (Complex(1, 2) + Complex(3, 4)).print(); */
+    /* add(Complex(1, 2), Complex(3, 4)).print(); */
+
+    (Complex(1, 2) + Complex(3, 4)).print(); // 直接 +
+    operator+ (Complex(1, 2), Complex(3, 4)) .print(); // 本质 
 }
 
 int main (int argc, char* argv[]) {

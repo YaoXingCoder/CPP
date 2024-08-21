@@ -26,10 +26,13 @@ public:
         cout << _real << " + " << _image << "i" << endl;
     }
 
-    /* friend */
-    /* Complex add(const Complex& lhs, const Complex& rhs); */
+    /* +  */
     friend
     Complex operator+(const Complex& c1, const Complex& c2);
+
+    /* - */
+    friend
+    Complex operator-(const Complex& c1, const Complex& c2);
 
 private:
     int _real;
@@ -37,17 +40,20 @@ private:
 };
 
 Complex operator+(const Complex& c1, const Complex& c2) {
-    return Complex(c1._real + c2._real, c1._image + c2._image );
+    return Complex(c1._real + c2._real, c1._image + c2._image);
 }
 
-/* Complex add(const Complex& lhs, const Complex & rhs) { */
-/*     return Complex(lhs._real + rhs._real, lhs._image + rhs._image ); */
-/* } */
+Complex operator-(const Complex& c1, const Complex& c2) {
+    return Complex(c1._real - c2._real, c1._image - c2._image);
+}
 
 void test01() {
-    /* add(Complex(1, 2), Complex(3, 4)).print(); */
-
-    (Complex(1, 2) + Complex(3, 4)).print();
+    Complex c1(1, 2);
+    Complex c2(3, 4);
+    
+    (c1 + c2).print();
+    (c2 - c1).print();
+    /* 本质 */
 }
 
 int main (int argc, char* argv[]) {
