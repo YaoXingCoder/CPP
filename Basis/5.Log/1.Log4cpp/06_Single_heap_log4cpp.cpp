@@ -8,8 +8,10 @@
  ************************************************************************/
 
 #include <iostream>
+#include <string>
 using std::cout;
 using std::endl;
+using std::string;
 
 #include <log4cpp/Appender.hh>
 #include <log4cpp/OstreamAppender.hh>
@@ -17,6 +19,18 @@ using std::endl;
 #include <log4cpp/Priority.hh>
 #include <log4cpp/PatternLayout.hh>
 using namespace log4cpp;
+
+/* 输出形式 */
+#define addPrefix(msg)                                  \
+    string(" [ ").append(__FILE__)                      \
+    .append(" : ").append(__func__)                     \
+    .append(" : ").append(std::to_string(__LINE__))     \
+    .append(" ] ").append(msg).c_str()                  \
+
+/* LogWarn */
+#define LogWarn(msg) {                                  \
+    Mylogger::getInstance()->warn(addPrefix(msg));      \
+}
 
 class Mylogger {
 public:
@@ -44,13 +58,15 @@ public:
     }
 
     static void destroy() {
-        Category::shutdown();
-        if( _pInstance != nullptr ) {
+        /* Category::shutdown(); */
+        if( _pInstance ) {
             delete _pInstance;
             _pInstance = nullptr;
         }
     }
 
+    Mylogger(const Mylogger& rhs) = delete;
+    Mylogger& operator=(const Mylogger& rhs) = delete;
 private:
     /* 初始化 */
     Mylogger()
@@ -84,27 +100,35 @@ private:
     Category& _sub;
     static Mylogger* _pInstance;
 };
+
 Mylogger* Mylogger::_pInstance = nullptr;
 
-void LogInfo(const char* msg) { Mylogger::getInstance()->info(msg);  Mylogger::destroy(); }
-void LogError(const char* msg) { Mylogger::getInstance()->error(msg); Mylogger::destroy();}
-void LogWarn(const char* msg) { Mylogger::getInstance()->warn(msg); Mylogger::destroy(); }
-void LogDebug(const char* msg) { Mylogger::getInstance()->debug(msg); Mylogger::destroy(); }
-
+/* string addPrefix(const char* msg) { */
+/*     return string("[ ").append(__FILE__).append(" : ").append(__func__).append(" : ").append(std::to_string(__LINE__)).append(" ]").append(msg); */
+/* } */
 
 /* ======================= 测试 ========================= */
 
 void test01() {
     Mylogger* log = Mylogger::getInstance();
-
     log->info("The log is info message.");
-
     Mylogger::destroy();
 }
 
 void test02() {
-    LogInfo("The log is info message.");
+    /* LogInfo("The log is info message."); */
+
+    /* 测试 string addPrefix 函数 */
+    /* string res = addPrefix("this is a warn msg"); */
+    /* cout << res << endl; */
+
+    /* Mylogger::getInstance()->warn(addPrefix("this is a warn messge.")); */
+
+    LogWarn("This is a warn message.");
+    Mylogger::destroy();
 }
+
+/* ======================= main ========================= */
 
 int main (int argc, char* argv[]) {
     /* test01(); */
