@@ -14,11 +14,11 @@ using std::cout;
 using std::endl;
 using std::string;
 
-/* Point类 是为了给 Line类 服务
+/* Point类 为 Line类 服务
  * 可以将 Point类 定义成 Line类 的内部类 */
 class Line {
 public:
-    /* 内部类 */
+    /* 内部类 也可以称呼 Point 是 Line 的 成员类型*/
     class Point{
     public:
         Point(int x,int y) : _ix(x) , _iy(y) {}
@@ -31,10 +31,7 @@ public:
         int _iy;
     };
 public:
-    Line(int x1, int y1, int x2, int y2)
-    : _pt1(x1,y1)
-    , _pt2(x2,y2)
-    {}
+    Line(int x1, int y1, int x2, int y2) : _pt1(x1,y1) , _pt2(x2,y2) {}
 
     void printLine() {
         _pt1.print();
