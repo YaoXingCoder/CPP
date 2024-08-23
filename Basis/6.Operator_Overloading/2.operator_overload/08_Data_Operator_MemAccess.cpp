@@ -76,16 +76,14 @@ void test02() {
    MiddleLayer ml(new Data());
    /* 如果通过封装后的对象去像 Data那用使用 -> 则必须重载 ->运算符 */
 
-   /* 共两个箭头->, 第二个编译器会自动添加上
+   /* 共两个箭头 ->, 第二个编译器会自动添加上
     * 第一个箭头 ->, 与operator相连作为函数名
-    * 第二个箭头 ->, 原生的箭头运算符用法
-    */
+    * 第二个箭头 ->, 原生的箭头运算符用法 */
    cout << ml.operator->()->getData() << endl; /* 箭头本质 */
    cout << ml->getData() << endl;
 
    cout << (ml.operator*()).getData() << endl; /* 解引用 */
    cout << (*ml).getData() << endl;
-
 }
 
 int main (int argc, char* argv[]) {

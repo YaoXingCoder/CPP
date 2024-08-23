@@ -34,9 +34,14 @@ void test01() {
      * */
     void (*p1)(int) = print;
     p1(3);
-
     p1 = display;
     p1(4);
+    
+    /* 规范完整的形式 */
+    void(*p)(int) = &print;
+    (*p)(3);
+    p = &display;
+    (*p)(4);
 
     FuncPtr p2 = print;
     p2(5);

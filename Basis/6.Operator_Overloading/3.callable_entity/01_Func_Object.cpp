@@ -3,8 +3,10 @@
     > Author: JiaZiChunQiu
     > Created Time: 2024年08月22日 星期四 16时50分08秒
     > Mail: JiaZiChunQiu@163.com
-    > Title: 调用() 运算符重载
+    > Title: 调用() 运算符重载, 函数对象
     > Content:
+    >   1.将()运算符重载, 此为函数对象实现的基础
+    >   2.定义成员变量, 记录函数调用次数, 此为函数对象的状态
  ************************************************************************/
 
 #include <iostream>
@@ -34,7 +36,7 @@ public:
         return _count;
     }
 private:
-    int _count = 0; // 携带状态
+    int _count = 0; /* 携带状态 */
 };
 
 /* 函数对象相较于普通函数 的优缺点
@@ -51,7 +53,8 @@ void test01() {
 
     fo();
     /* fo.operator()() // 本质 */
-
+    
+    /* 函数的返回值、参数根据代码设计灵活设置 */
     cout << fo(5,6) << endl;
     cout << fo.operator()(5,6) << endl; // 本质
 
