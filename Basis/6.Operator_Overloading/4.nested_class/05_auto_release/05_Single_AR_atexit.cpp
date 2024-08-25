@@ -5,18 +5,21 @@
     > Mail: JiaZiChunQiu@163.com
     > Title: 单例对象的释放, 自动释放
     > Content:
+    >   1.atexit() 注册销毁函数, 在程序结束前会执行注册的函数
+    >   2.饿汉式 和 懒汉式
  ************************************************************************/
 
 #include <iostream>
-#include <string>
 using std::cout;
 using std::endl;
-using std::string;
 
 class Singleton {
 public:
     static Singleton * getInstance(){
-        if(nullptr == _pInstance){ _pInstance = new Singleton(1,2); }
+        if(nullptr == _pInstance){
+            atexit(destroy);
+            _pInstance = new Singleton(1,2); 
+        }
         return _pInstance;
     }
 
@@ -25,12 +28,6 @@ public:
         _iy = y;
     }
 
-    static void destroy(){
-         if(_pInstance){
-			delete _pInstance;
-			_pInstance = nullptr;
-		}
-	}
 
     void print() const { cout << "( " << _ix << ", " << _iy << " )" << endl; }
 
@@ -40,6 +37,13 @@ private:
     { cout << "Singleton(int,int)" << endl; }
     ~Singleton(){ cout << "~Singleton()" << endl; } /* 因为对象在堆中, 程序结束不会调用析构, 需要手动释放堆上的空间 */
 
+    static void destroy(){
+         if(_pInstance){
+			delete _pInstance;
+			_pInstance = nullptr;
+		}
+	}
+
     Singleton(const Singleton& rhs) = delete;
     Singleton& operator=(const Singleton & rhs) = delete;
 private:
@@ -47,8 +51,12 @@ private:
     int _iy;
     static Singleton * _pInstance;
 };
-Singleton * Singleton::_pInstance = nullptr;
+/* 懒汉 */
+/* Singleton * Singleton::_pInstance = nullptr; */
 
+/* 饿汉 */
+Singleton* Singleton::_pInstance = Singleton::getInstance();
+/* Singleton* Singleton::_pInstance = getInstance(); */
 
 /* =============== test ============== */
 void test0() {

@@ -1,34 +1,22 @@
 /*************************************************************************
-    > File Name: 02_string_sso.cpp
+    > File Name: 04_test.cpp
     > Author: JiaZiChunQiu
-    > Created Time: 2024年08月23日 星期五 17时48分57秒
+    > Created Time: 2024年08月25日 星期日 15时50分08秒
     > Mail: JiaZiChunQiu@163.com
-    > Title: 短字符优化
+    > Title:
     > Content:
  ************************************************************************/
-
+#include "04_Line.hh"
 #include <iostream>
 using std::cout;
 using std::endl;
 
-class string {
-public:
-private:
-	union Buffer{
-		char * _pointer;
-		char _local[16];
-	};
-
-	size_t _size;
-	size_t _capacity;
-    Buffer _buffer;
-};
-
+/* =============== test =============== */
 void test0() {
-
+    Line(1, 2, 3, 4).printLine();
 }
-
+/* =============== main =============== */
 int main (int argc, char* argv[]) {
-
+    test0();
     return 0;
 }
