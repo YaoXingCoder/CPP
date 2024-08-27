@@ -17,6 +17,7 @@ public:
     { cout << "Test() 无参" << endl; }
     
     ~Test(){ cout << "~Test() 析构" << endl; }
+
 private:
     long _test;
 };
@@ -27,6 +28,9 @@ public:
     Base(long base) : _base(base) { cout << "Base(long) 有参" << endl; }
 
     ~Base() { cout << "~Base() 析构" << endl; }
+
+    void print() const{ cout << _base << endl; }
+    long _test1 = 10;
 private:
 	long _base;
 };
@@ -38,6 +42,7 @@ public:
 	{ cout << "Derived(long) 有参" << endl; }
 
     ~Derived() { cout << "~Derived() 析构" << endl; }
+    char _test1 = 'a';
 private:
 	long _derived;
     Test _t1;
@@ -47,7 +52,14 @@ private:
 
 /* =============== test =============== */
 void test0() {
-    Derived(1);
+    cout << endl << "====== test0 ======" << endl;
+    Derived d1(1);
+
+    cout << endl << "====== start ======" << endl;
+    cout << d1._test1 << endl;
+    cout << d1.Base::_test1 << endl;
+
+    cout << endl << "====== end ======" << endl;
 }
 /* =============== main =============== */
 int main (int argc, char* argv[]) {
