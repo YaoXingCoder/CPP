@@ -12,7 +12,7 @@
 #include <sstream>
 #include <string>
 #include <map>
-#include <algorithm>
+/* #include <algorithm> */
 using std::cerr;
 using std::cout;
 using std::endl;
@@ -29,12 +29,12 @@ using std::chrono::seconds;
 using std::chrono::duration;
 
 /* 每一个 vector 元素的存储结构 */
-struct Record {
-    Record(const string & word,int frequency) : _word(word) , _frequency(frequency) {}
+/* struct Record { */
+/*     Record(const string & word,int frequency) : _word(word) , _frequency(frequency) {} */
 
-	string _word;
-	int _frequency;
-};
+/* 	string _word; */
+/* 	int _frequency; */
+/* }; */
 
 /* 比较器 */
 /* bool operator<(const Record & lhs,const Record & rhs){ */
@@ -77,7 +77,7 @@ public:
 
         /* 2.5 将 vector 中所有的元素进行排序 
          *  如果是 map, 会自动排序 */
-        sort(_dict.begin(),_dict.end());
+        /* sort(_dict.begin(),_dict.end()); */
 
         /* 关闭关联 */
         ifs.close();

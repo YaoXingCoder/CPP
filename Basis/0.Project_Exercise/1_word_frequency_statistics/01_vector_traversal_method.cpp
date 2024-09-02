@@ -75,14 +75,24 @@ void Dictionary::dealWord(std::string &word) {
 }
 
 void Dictionary::pushVec(const std::string& word) {
-    std::vector<Record>::iterator it = _dict.begin();
-    while( it != _dict.end()) {
-        if ( it->_word == word ) {
-            ++(it->_frequency);
+    /* std::vector<Record>::iterator it = _dict.begin(); */
+    /* while( it != _dict.end()) { */
+    /*     if ( it->_word == word ) { */
+    /*         ++(it->_frequency); */
+    /*         return; */
+    /*     } */
+    /*     ++it; */
+    /* } */
+
+    /* 优化 */
+    std::size_t idx = 0;
+    for(; idx < _dict.size(); ++idx) {
+        if ( word == _dict[idx]._word ) {
+            ++_dict[idx]._frequency;
             return;
         }
-        ++it;
     }
+
     _dict.push_back(Record(word, 1));
     return;
 }

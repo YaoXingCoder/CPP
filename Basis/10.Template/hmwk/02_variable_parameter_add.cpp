@@ -23,8 +23,8 @@ T add(T t, Args ... args) {
 
 /* =============== test =============== */
 void test0() {
-    cout << add(1,2,2,3,4,5,5,6,6,123.0,123,0) << endl;
-    cout << add(1, 2) << endl;
+    cout << add( 1, 2, 2, 3, 4, 5, 5, 6, 6, 123.0, 123.0 ) << endl;
+    cout << add( 1, 2 ) << endl;
 }
 /* =============== main =============== */
 int main (int argc, char* argv[]) {

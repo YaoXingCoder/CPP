@@ -11,30 +11,36 @@
     >   4.加入 vector 中
  ************************************************************************/
 
-#include "01_vector_traversal_method.hh"
+/* #include "01_vector_traversal_method.hh" */
+#include "02_map_method.hh"
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <algorithm>
+/* #include <algorithm> */
 
 /* const int Dictionary::_vecSize = 64; */
 
-Record::Record(const std::string &word, int frequency) : _word(word), _frequency(frequency){
+/* 使用 map 后, 不需要结构体 */
+/* Record::Record(const std::string &word, int frequency) : _word(word), _frequency(frequency){ */
     /* std::cout << "Record(const string, int)" << std::endl; */
-}
+/* } */
 
-Dictionary::Dictionary(const int vecSize){
-    _dict.reserve(vecSize);
-    std::cout << "Dictionary(const int) constructor" << std::endl;
+/* Dictionary::Dictionary(const int vecSize){ */
+/*     _dict.reserve(vecSize); */
+/*     std::cout << "Dictionary(const int) constructor" << std::endl; */
+/* } */
+/* map 容器 */
+Dictionary::Dictionary() {
+    std::cout << "Dictionary() non-para constructor" << std::endl;
 }
 
 Dictionary::~Dictionary() {
     std::cout << "~Dictionary() destructor" << std::endl;
 }
 
-static bool operator<(const Record &lhs, const Record &rhs) {
-    return lhs._word < rhs._word;
-}
+/* static bool operator<(const Record &lhs, const Record &rhs) { */
+/*     return lhs._word < rhs._word; */
+/* } */
 
 void Dictionary::read(const std::string &filename) {
     /* 关联输入文件 */ 
@@ -54,12 +60,16 @@ void Dictionary::read(const std::string &filename) {
             /* 处理字符串 */
             dealWord(word);
             /* 判断并存入 vector */
-            if( !word.empty()) { pushVec(word); }
+            /* if( !word.empty()) { pushVec(word); } */
+            if ( !word.empty() ) {
+                ++_dict[word];
+            }
         }
     }
 
     /* 排序 */
-    std::sort(_dict.begin(), _dict.end());
+    /* map 是有序容器 */
+    /* std::sort(_dict.begin(), _dict.end()); */
 
     /* 关闭资源 */
     ifs.close();
@@ -74,27 +84,35 @@ void Dictionary::dealWord(std::string &word) {
     }
 }
 
-void Dictionary::pushVec(const std::string& word) {
-    std::vector<Record>::iterator it = _dict.begin();
-    while( it != _dict.end()) {
-        if ( it->_word == word ) {
-            ++(it->_frequency);
-            return;
-        }
-        ++it;
-    }
-    _dict.push_back(Record(word, 1));
-    return;
-}
+/* 更改为了 map 容器 */
+/* void Dictionary::pushVec(const std::string& word) { */
+/*     std::vector<Record>::iterator it = _dict.begin(); */
+/*     while( it != _dict.end()) { */
+/*         if ( it->_word == word ) { */
+/*             ++(it->_frequency); */
+/*             return; */
+/*         } */
+/*         ++it; */
+/*     } */
+/*     _dict.push_back(Record(word, 1)); */
+/*     return; */
+/* } */
 
 void Dictionary::print() const {
     std::cout << "------ start ------" << std::endl;
-    for(const Record& rd : _dict) {
-        std::cout << rd._word << ", " << rd._frequency << std::endl;
-    }
-    std::cout << "------ end ------" << std::endl;
+    /* for(const Record& rd : _dict) { */
+    /*     std::cout << rd._word << ", " << rd._frequency << std::endl; */
+    /* } */
+    /* std::cout << "------ end ------" << std::endl; */
     /* std::cout << _dict.size() << std::endl; */
     /* std::cout << _dict.capacity() << std::endl; */
+
+    /* map 的遍历 */
+    std::map<std::string, int>::const_iterator it = _dict.begin();
+    while ( it != _dict.end() ) {
+        std::cout << it->first << " : " << it->second << std::endl;
+        ++it;
+    }
 }
 
 void Dictionary::store(const std::string& filename) {
@@ -105,10 +123,15 @@ void Dictionary::store(const std::string& filename) {
     }
 
     /* 循环输出到文件 */
-    for(Record& rd : _dict) {
-        ofs << rd._word << " : " << rd._frequency << std::endl;
-    }
+    /* for(Record& rd : _dict) { */
+    /*     ofs << rd._word << " : " << rd._frequency << std::endl; */
+    /* } */
 
+    std::map<std::string, int>::const_iterator it = _dict.begin();
+    while ( it != _dict.end() ) {
+        ofs << it->first << " : " << it->second << std::endl;
+        ++it;
+    }
     /* 关闭资源 */
     ofs.close();
 }

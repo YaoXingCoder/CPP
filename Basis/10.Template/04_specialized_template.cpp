@@ -35,6 +35,17 @@ const char * add<const char *>(const char * p1, const char * p2){
     return ptmp;
 }
 
+#include <type_traits>
+
+template<typename T>
+void printTypeInfo() {
+    // 获取 T 的非引用类型
+    using NonRefT = typename std::remove_reference<T>::type;
+    std::cout << "Original Type: " << typeid(T).name() << "\n";
+    std::cout << "Non-Reference Type: " << typeid(NonRefT).name() << "\n";
+}
+
+
 /* =============== test =============== */
 void test0() {
     string s1("hello");
@@ -55,8 +66,20 @@ void test0() {
     cout << p << endl;
     delete [] p;
 }
+
+void test1() {
+
+    int a = 5;
+    int& b = a;
+    int&& c = 10;
+
+    printTypeInfo<decltype(a)>(); // int
+    printTypeInfo<decltype(b)>(); // int&
+    printTypeInfo<decltype(c)>(); // int&&
+}
 /* =============== main =============== */
 int main (int argc, char* argv[]) {
-    test0();
+    /* test0(); */
+    test1();
     return 0;
 }
