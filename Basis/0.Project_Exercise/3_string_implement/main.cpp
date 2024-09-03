@@ -11,10 +11,19 @@
 
 /* =============== test =============== */
 void test0() {
-    SSOString s1; 
+    /* SSOString s1; */ 
     SSOString s2("hello");
     std::cout << s2 << ", " << s2.size() << std::endl; 
     SSOString s3("hello,world, it's time to happy.");
+    std::cout << s3 << ", " << s3.size() << std::endl; 
+    SSOString s4(SSOString("world"));
+    std::cout << s4 << ", " << s4.size() << std::endl;
+    SSOString s5(s2);
+    std::cout << s5 << ", " << s5.size() << std::endl;
+    /* s5 = s3; */
+    /* std::cout << s5 << ", " << s5.size() << std::endl; */
+    s5 = std::move(s3);
+    std::cout << s5 << ", " << s5.size() << std::endl;
     std::cout << s3 << ", " << s3.size() << std::endl; 
 }
 /* =============== main =============== */

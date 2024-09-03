@@ -9,47 +9,36 @@
 
 #include <iostream>
 #include <vector>
+#include <list>
 using std::cout;
 using std::endl;
 using std::vector;
 
-/* =============== test =============== */
-void test0() {
-    std::vector<int> vec = {1, 2, 3, 4, 5};
-
-    // 打印初始状态
-    std::cout << "Initial vector: ";
-    for (const auto& elem : vec) {
-        std::cout << elem << " ";
+/* 多个元素相同时, 迭代器删除导致漏删 */
+void test1() {
+    std::vector<int> vec{1,2,2,2,2,3,4,5,6,7};
+    for ( std::vector<int>::iterator it = vec.begin(); it != vec.end();) {
+        if ( 2 == *it )  { it = vec.erase(it); }
+        else { ++it; }
     }
+
+    for ( int i : vec ) { std::cout << i << " "; }
     std::cout << std::endl;
+}
 
-    // 获取指向第一个元素的迭代器
-    std::vector<int>::iterator it = vec.begin();
-    std::vector<int>::iterator it2 = vec.begin();
-    it2+=2;
-    std::cout << "Before erase, first element: " << *it << std::endl;
-    std::cout << "Before erase, second element: " << *it2 << std::endl;
-
-    // 擦除第一个元素
-    vec.erase(it);
-
-    // 尝试访问被擦除元素
-    // 这会导致未定义行为，因为it现在是悬挂迭代器
-    std::cout << "After erase, first element: " << *it << std::endl;
-    std::cout << "After erase, second element: " << *it2 << std::endl;
-    std::cout << "After erase, fourth element: " << vec[3] << std::endl;
-    std::cout << "After erase, fifth element: " << vec[4] << std::endl;
-
-    // 打印擦除后的状态
-    std::cout << "After erase: ";
-    for (const auto& elem : vec) {
-        std::cout << elem << " ";
+void test2() {
+    std::list<int> vec{1,2,2,2,2,3,4,5,6,7};
+    for ( std::list<int>::iterator it = vec.begin(); it != vec.end();) {
+        if ( 2 == *it )  { it = vec.erase(it); }
+        else { ++it; }
     }
+
+    for ( int i : vec ) { std::cout << i << " "; }
     std::cout << std::endl;
 }
 /* =============== main =============== */
 int main (int argc, char* argv[]) {
-    test0();
+    test1();
+    /* test2(); */
     return 0;
 }
