@@ -18,6 +18,8 @@
 !*.jpeg
 !*.jpg
 !*.docx
+!*.xml
+!*.tpp
 
 # 编程
 !*.c
