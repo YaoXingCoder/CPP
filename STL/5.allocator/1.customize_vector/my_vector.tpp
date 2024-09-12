@@ -59,12 +59,10 @@ void Vector<T>::reallocate() {
     std::memcpy(tmp, _start, size() * sizeof(T));
 
     /* 释放旧空间 */
-    T * it = _start;
-    while ( it != _finish ) {
-        _alloc.destroy(it);
-        ++it;
+    if ( _start ) {
+        while ( _start != _finish ) { _alloc.destroy(--_finish); }
+        _alloc.deallocate(_start, capacity());
     }
-    _alloc.deallocate(_start, capacity());
 
     /* 更新数据 */
     _start = tmp;
