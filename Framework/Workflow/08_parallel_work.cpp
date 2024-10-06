@@ -97,9 +97,10 @@ void test0() {
     for (int i = 0; i < urls.size(); ++i) {
         // 创建任务
         WFHttpTask *http = WFTaskFactory::create_http_task(
-            urls[i], REDIRECT_MAX, RETRY_MAX, httpCallBack);
+            urls[i], REDIRECT_MAX, RETRY_MAX, httpCallBack); // http任务
         // 创建串行序列
-        SeriesWork *series = Workflow::create_series_work(http, nullptr);
+        SeriesWork *series =
+            Workflow::create_series_work(http, nullptr); // 序列包装http任务
         // 加入context
         SeriesContext *context = new SeriesContext;
         context->url = urls[i];
