@@ -29,10 +29,59 @@ void sig_handle(int signo) { waitGroup.done(); }
 
 void serverTaskCallBack(WFHttpTask *httpTask) {
     std::cout << "\nserverTaskCallBack is called\n";
+    SeriesContext *context =
+        static_cast<SeriesContext *>(series_of(httpTask)->get_context());
+    protocol::HttpResponse *resp = httpTask->get_resp();
+    size_t size = resp->get_output_body_size();
+    if (httpTask->get_state() == WFT_STATE_SUCCESS) {
+        std::cerr << "Http success\n";
+    }
 }
 
 void newTaskCallBack(WFHttpTask *newTask) {
     std::cout << "\nnewTaskCallBack is called\n";
+
+    protocol::HttpResponse *resp = newTask->get_resp();
+
+    int state = newTask->get_state();
+    int error = newTask->get_error();
+    switch (state) {
+    case WFT_STATE_SYS_ERROR:
+        std::cerr << "system error :" << strerror(error) << std::endl;
+        break;
+    case WFT_STATE_DNS_ERROR:
+        std::cerr << "DNS error :" << gai_strerror(error) << std::endl;
+        break;
+    case WFT_STATE_SSL_ERROR:
+        std::cerr << "SSL error :" << error << std::endl;
+        break;
+    case WFT_STATE_TASK_ERROR:
+        std::cerr << "Task error :" << error << std::endl;
+        break;
+    case WFT_STATE_SUCCESS:
+        break;
+    }
+    if (state != WFT_STATE_SUCCESS) {
+        std::cerr << "Task failed!" << std::endl;
+        return;
+    }
+
+    // 找到http任务响应体的内容
+    const void *body;
+    size_t size;
+    resp->get_parsed_body(&body, &size); // 获取响应体的首地址
+
+    /* 获取序列中的 context */
+    SeriesContext *context =
+        static_cast<SeriesContext *>(series_of(newTask)->get_context());
+    context->serverTask->set_callback(
+        serverTaskCallBack); // 在序列结束之前,都可以设置服务端任务的回调
+    protocol::HttpResponse *serverTaskResp =
+        context->serverTask->get_resp(); // process 的 resp
+    serverTaskResp->append_output_body_nocopy(body, size);
+
+    // 将http任务的resp对象移动为服务端任务的resp对象
+    *serverTaskResp = std::move(*resp); // 变为 newTask 的 resp
 }
 
 void process(WFHttpTask *serverTask) {
