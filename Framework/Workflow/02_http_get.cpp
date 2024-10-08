@@ -31,9 +31,9 @@ void test0() {
 }
 
 void wget_callback(WFHttpTask *task) {
-    protocol::HttpRequest *req = task->get_req();    // 获取请求段指针
-    protocol::HttpResponse *resp = task->get_resp(); // 获取响应段指着
-    int state = task->get_state();                   // 获取状态值
+    protocol::HttpRequest *req = task->get_req(); // 获取请求段指针
+
+    int state = task->get_state(); // 获取状态值
     int error = task->get_error(); // 如果出错，获取出错值
 
     /* 根据枚举值，输出对应错误信息 */
@@ -69,6 +69,9 @@ void wget_callback(WFHttpTask *task) {
      * version : http 版本
      * uri : 资源文件
      */
+    protocol::HttpResponse *resp = task->get_resp(); // 获取响应段指着
+    resp->append_output_body(
+        "\n\nhello12312312312312312312312312312123123123\n");
     std::cout << "\n------------------Request Head-----------------\n";
     fprintf(stdout, "method is %s, http version is %s, uri is %s\n\n",
             req->get_method(), req->get_http_version(), req->get_request_uri());

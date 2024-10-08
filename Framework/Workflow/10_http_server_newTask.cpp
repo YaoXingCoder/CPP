@@ -41,8 +41,6 @@ void serverTaskCallBack(WFHttpTask *httpTask) {
 void newTaskCallBack(WFHttpTask *newTask) {
     std::cout << "\nnewTaskCallBack is called\n";
 
-    protocol::HttpResponse *resp = newTask->get_resp();
-
     int state = newTask->get_state();
     int error = newTask->get_error();
     switch (state) {
@@ -67,8 +65,10 @@ void newTaskCallBack(WFHttpTask *newTask) {
     }
 
     // 找到http任务响应体的内容
+    protocol::HttpResponse *resp = newTask->get_resp();
     const void *body;
     size_t size;
+
     resp->get_parsed_body(&body, &size); // 获取响应体的首地址
 
     /* 获取序列中的 context */
@@ -76,12 +76,23 @@ void newTaskCallBack(WFHttpTask *newTask) {
         static_cast<SeriesContext *>(series_of(newTask)->get_context());
     context->serverTask->set_callback(
         serverTaskCallBack); // 在序列结束之前,都可以设置服务端任务的回调
-    protocol::HttpResponse *serverTaskResp =
-        context->serverTask->get_resp(); // process 的 resp
-    serverTaskResp->append_output_body_nocopy(body, size);
+    protocol::HttpResponse *serverTaskResp;
+    serverTaskResp = context->serverTask->get_resp(); // process 的 resp
+    // const void *body_process;
+    // size_t size_process;
+    // context->serverTask->get_resp()->get_parsed_body(&body_process,
+    //                                                  &size_process);
+    // serverTaskResp->get_parsed_body(&body_process, &size_process);
+    // serverTaskResp->append_output_body(body, size);
 
     // 将http任务的resp对象移动为服务端任务的resp对象
-    *serverTaskResp = std::move(*resp); // 变为 newTask 的 resp
+    *serverTaskResp = std::move(*resp); // process 的 resp 变为 newTask 的 resp
+    serverTaskResp->append_output_body(body, size);
+    body = nullptr;
+    size = 0;
+    serverTaskResp->get_parsed_body(&body, &size);
+    fwrite(body, size, 1, stdout);
+    fflush(stdout);
 }
 
 void process(WFHttpTask *serverTask) {
