@@ -114,6 +114,11 @@ void test0() {
         series->push_back(redisTask);
     });
 
+    server.Static("/", "./index.html");
+    server.Static("/static", "./hello.html");
+
+    server.ROUTE()
+
     if (server.track().start(8888) == 0) {
         server.list_routes(); // list_routes 列出支持的方法和路径,
                               // 仅限于track()被调用时生效
