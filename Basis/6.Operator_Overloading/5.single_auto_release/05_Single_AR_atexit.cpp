@@ -9,6 +9,7 @@
     >   2.饿汉式 和 懒汉式
  ************************************************************************/
 
+#include <stdlib.h>
 #include <iostream>
 using std::cout;
 using std::endl;
@@ -38,6 +39,7 @@ private:
     ~Singleton(){ cout << "~Singleton()" << endl; } /* 因为对象在堆中, 程序结束不会调用析构, 需要手动释放堆上的空间 */
 
     static void destroy(){
+        std::cout << "destroy is running" << '\n';
          if(_pInstance){
 			delete _pInstance;
 			_pInstance = nullptr;
@@ -64,6 +66,7 @@ void test0() {
     Singleton::getInstance()->print();
     Singleton::getInstance()->init(3, 4);
     Singleton::getInstance()->print();
+    /* while(1); */
     /* Singleton::destroy(); /1* 需要手动释放 *1/ */
 }
 

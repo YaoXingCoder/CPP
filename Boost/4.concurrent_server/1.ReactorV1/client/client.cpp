@@ -56,6 +56,7 @@ void test0() {
             } else if ( sockfd == STDIN_FILENO ) {
                 bzero(buf, sizeof(buf));
                 fgets(buf, sizeof(buf), stdin);
+                strcat(buf, "\r\n");
                 write(clientfd, buf, strlen(buf) + 1);
             }
         }

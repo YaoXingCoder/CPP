@@ -96,5 +96,5 @@ int SocketIO::readLine(char * buf, int len) {
     }
 
     *pstr = '\0';
-    return total - left;
+    return total;
 }

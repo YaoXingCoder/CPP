@@ -182,6 +182,8 @@ void test1() {
 
 int main (int argc, char* argv[]) {
     /* test0(); */
-    test1();
+    /* test1(); */
+    std::string str;
+    std::cout << sizeof(str) << '\n';
     return 0;
 }

@@ -39,6 +39,7 @@ std::ostream &operator<<(std::ostream &os, const Point &rhs) {
 
 /* 运算符重载 */
 bool operator<(const Point & lhs, const Point & rhs) {
+    std::cout << "operator < 运算符重载\n";
     if ( lhs.getDistance() == rhs.getDistance() ) {
         if ( lhs.getX() == rhs.getX() ) {
             if ( lhs.getY() == rhs.getY()) { return false; }
@@ -64,7 +65,7 @@ namespace std {
 template <>
     struct less<Point> {
         bool operator()(const Point & lhs, const Point & rhs) const {
-            /* cout << "template" << endl; */
+            cout << "template : struct less : operator() \n";
             if ( lhs.getDistance() == rhs.getDistance() ) {
                 if ( lhs.getX() == rhs.getX() ) {
                     if ( lhs.getY() == rhs.getY()) { return false; }
@@ -84,9 +85,10 @@ void test0() {
         Point(1, 2),
         Point(3, 2)
     };
-    /* priority_queue<Point> pque; */
-    /* priority_queue<Point, std::vector<Point>, Compare> pque; */
+
     priority_queue<Point, std::vector<Point>> pque;
+    /* priority_queue<Point, std::vector<Point>, Compare> pque; */
+    /* priority_queue<Point, std::vector<Point>> pque; */
 
     for(size_t idx = 0; idx != vec.size(); ++idx) {
         pque.push(vec[idx]);
